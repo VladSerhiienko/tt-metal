@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
 
 namespace tt::tt_metal::programming_examples::simple_renderer {
 
@@ -29,5 +30,23 @@ struct TileBin {
 };
 
 static_assert(sizeof(TileBin) == 16);
+
+struct ScreenVertex {
+    float x = 0.0F;
+    float y = 0.0F;
+    float z = 0.0F;
+};
+
+struct ScreenTriangle {
+    ScreenVertex v0;
+    ScreenVertex v1;
+    ScreenVertex v2;
+    uint32_t rgba = 0;
+};
+
+struct TileBinningResult {
+    std::vector<TileBin> tile_bins;
+    std::vector<uint32_t> triangle_indices;
+};
 
 }  // namespace tt::tt_metal::programming_examples::simple_renderer
