@@ -4,49 +4,23 @@
 
 #pragma once
 
+#include <array>
 #include <cstdint>
-#include <vector>
 
 namespace tt::tt_metal::programming_examples::simple_renderer {
 
 constexpr uint32_t kTileWidth = 32;
 constexpr uint32_t kTileHeight = 32;
-constexpr uint32_t kPixelsPerTile = kTileWidth * kTileHeight;
-constexpr uint32_t kRgbaBytesPerPixel = sizeof(uint32_t);
-constexpr uint32_t kColorTileBytes = kPixelsPerTile * kRgbaBytesPerPixel;
+constexpr uint32_t kElementsPerTile = kTileWidth * kTileHeight;
+constexpr uint32_t kCoordinateTileBytes = kElementsPerTile * sizeof(float);
 
-struct RendererConfig {
-    uint32_t width = 0;
-    uint32_t height = 0;
-    uint32_t tiles_x = 0;
-    uint32_t tiles_y = 0;
+struct VertexTransformConfig {
+    uint32_t vertex_count = 0;
+    uint32_t vertex_tiles = 0;
+    uint32_t viewport_width = 0;
+    uint32_t viewport_height = 0;
 };
 
-struct TileBin {
-    uint32_t offset = 0;
-    uint32_t count = 0;
-    uint32_t reserved0 = 0;
-    uint32_t reserved1 = 0;
-};
-
-static_assert(sizeof(TileBin) == 16);
-
-struct ScreenVertex {
-    float x = 0.0F;
-    float y = 0.0F;
-    float z = 0.0F;
-};
-
-struct ScreenTriangle {
-    ScreenVertex v0;
-    ScreenVertex v1;
-    ScreenVertex v2;
-    uint32_t rgba = 0;
-};
-
-struct TileBinningResult {
-    std::vector<TileBin> tile_bins;
-    std::vector<uint32_t> triangle_indices;
-};
+using Mat4 = std::array<float, 16>;
 
 }  // namespace tt::tt_metal::programming_examples::simple_renderer
